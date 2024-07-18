@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questionnaire</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <h1>Questionnaire</h1>
+    <form id="questionnaireForm">
+        <label for="nom">Nom:</label>
+        <input type="text" id="nom" name="nom" required><br><br>
+
+        <label for="age">Âge:</label>
+        <input type="number" id="age" name="age" required><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="question1">Question 1:</label>
+        <textarea id="question1" name="question1" required></textarea><br><br>
+
+        <label for="question2">Question 2:</label>
+        <textarea id="question2" name="question2" required></textarea><br><br>
+
+        <input type="button" value="Envoyer" onclick="generatePDF()">
+    </form>
+
+    <script>
+        function generatePDF() {
+            const { jsPDF } = window.jspdf;
+
+            const doc = new jsPDF();
+            const form = document.getElementById('questionnaireForm');
+            const nom = form.nom.value;
+            const age = form.age.value;
+            const email = form.email.value;
+            const question1 = form.question1.value;
+            const question2 = form.question2.value;
+
+            doc.text("Nom: " + nom, 10, 10);
+            doc.text("Âge: " + age, 10, 20);
+            doc.text("Email: " + email, 10, 30);
+            doc.text("Question 1: ", 10, 40);
+            doc.text(question1, 10, 50);
+            doc.text("Question 2: ", 10, 70);
+            doc.text(question2, 10, 80);
+
+            doc.save('questionnaire.pdf');
+        }
+    </script>
+</body>
+</html>
